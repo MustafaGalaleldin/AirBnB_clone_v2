@@ -133,6 +133,14 @@ class HBNBCommand(cmd.Cmd):
             value = arg[arg.find('=') + 1:]
             value = value.replace('"', '')
             value = value.replace('_', ' ')
+            try:
+                value = int(value)
+            except Exception:
+                try:
+                    value = float(value)
+                except Exception:
+                    pass
+
             setattr(new_instance, attr, value)
             storage.save()
         storage.save()
