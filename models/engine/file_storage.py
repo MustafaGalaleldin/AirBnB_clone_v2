@@ -58,6 +58,6 @@ class FileStorage:
 
     def delete(self, obj=None):
         "delete obj from __objects if it's inside"
-        if obj and obj in FileStorage.__objects:
+        if obj and obj in FileStorage.__objects.values():
             del (FileStorage.__objects[obj])
             self.save()
