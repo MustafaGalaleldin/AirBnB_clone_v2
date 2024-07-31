@@ -62,4 +62,5 @@ class FileStorage:
             for k, v in FileStorage.__objects.items():
                 if v == obj:
                     del (FileStorage.__objects[k])
+                    break
             self.save()
