@@ -35,7 +35,7 @@ echo "<!DOCTYPE html>
 
 # Create a symbolic link /data/web_static/current linked to the /data/web_static/releases/test/ folder.
 # If the symbolic link already exists, it should be deleted and recreated every time the script is ran.
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current/
 
 # Give ownership of the /data/ folder to the ubuntu user AND group Recursively
 sudo chown -R ubuntu:ubuntu /data/
