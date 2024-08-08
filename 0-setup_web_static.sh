@@ -4,7 +4,7 @@
 # Install Nginx if it not already installed
 if [[ ! -e /etc/nginx ]]; then
         sudo apt-get -y update
-        sudp apt-get -y install nginx
+        sudo apt-get -y install nginx
         sudo service nginx start
 fi
 
