@@ -3,9 +3,9 @@
 
 # Install Nginx if it not already installed
 if [[ ! -e /etc/nginx ]]; then
-	sudo apt-get -y update
-	sudp apt-get -y install nginx
-	sudo service nginx start
+        sudo apt-get -y update
+        sudp apt-get -y install nginx
+        sudo service nginx start
 fi
 
 # Create the folder /data/ if it doesn’t already exist
@@ -43,4 +43,3 @@ sudo chown -R ubuntu:ubuntu /data/
 # Update the Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static
 add="\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}"
 sudo sed -i "/server_name _;/a \\$add" /etc/nginx/sites-available/default
-sudo service nginx restart
