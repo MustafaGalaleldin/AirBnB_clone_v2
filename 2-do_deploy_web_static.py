@@ -4,6 +4,7 @@
     using the function do_deploy
 """
 from fabric.api import run, env, put
+from os.path import exists
 
 env.hosts = ["52.201.220.63", "54.236.24.172"]
 env.user = "ubuntu"
@@ -11,7 +12,7 @@ env.user = "ubuntu"
 
 def do_deploy(archive_path):
     """The fabric function for the process"""
-    if not archive_path:
+    if not archive_path or exists(archive_path) is False:
         return False
     try:
         archive_name = archive_path[9:len(archive_path) - 4]
