@@ -3,7 +3,7 @@
     a Fabric script that distributes an archive to your web servers
     using the function do_deploy
 """
-from fabric.api import run, env, put
+from fabric.api import run, env, put, sudo
 from os.path import exists
 
 env.hosts = ["52.201.220.63", "54.236.24.172"]
@@ -19,15 +19,15 @@ def do_deploy(archive_path):
         arch = archive_name.split(".")[0]
         put(archive_path, "/tmp/")
         run(f"mkdir -p /data/web_static/releases/{arch}")
-        run(f"sudo tar xzf /tmp/{archive_name} -C"
+        run(f"tar -xzf /tmp/{archive_name} -C"
             f"/data/web_static/releases/{arch}")
         run(f"rm -f /tmp/{archive_name}")
         run("rm -rf /data/web_static/current 2> /dev/null")
-        run(f"sudo mv /data/web_static/releases/{arch}/web_static/* "
+        run(f"mv -f /data/web_static/releases/{arch}/web_static/* "
             f"/data/web_static/releases/{arch}")
-        run("sudo rm -rf /data/web_static/releases/{arch}/web_static")
-        run(f"ln -sf /data/web_static/releases/{arch}/ "
-            "/data/web_static/current")
+        run("rm -rf /data/web_static/releases/{arch}/web_static")
+        sudo(f"ln -sf /data/web_static/releases/{arch}/ "
+             "/data/web_static/current")
         return True
     except Exception:
         return False
