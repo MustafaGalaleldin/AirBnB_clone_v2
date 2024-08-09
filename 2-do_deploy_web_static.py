@@ -24,7 +24,7 @@ def do_deploy(archive_path):
         run(f"sudo mv /data/web_static/releases/{archive_name}/web_static/* "
             f"/data/web_static/releases/{archive_name}")
         run("sudo rm -rf /data/web_static/releases/{archive_name}/web_static")
-        run(f"sudo ln -sf /data/web_static/releases/{archive_name} "
+        run(f"sudo ln -sf /data/web_static/releases/{archive_name}/ "
             "/data/web_static/current")
         return True
     except Exception:
