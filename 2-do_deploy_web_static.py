@@ -15,17 +15,18 @@ def do_deploy(archive_path):
     if not archive_path or exists(archive_path) is False:
         return False
     try:
-        archive_name = archive_path[9:len(archive_path) - 4]
+        archive_name = archive_path.split("/")[-1]
+        arch = archive_name.split(".")[0]
         put(archive_path, "/tmp/")
-        run(f"sudo mkdir -p /data/web_static/releases/{archive_name}")
-        run(f"sudo tar xzf /tmp/{archive_path[9:]} -C"
-            f"/data/web_static/releases/{archive_name}")
-        run(f"sudo rm -f /tmp/{archive_path[9:]}")
-        run("sudo rm -rf /data/web_static/current 2> /dev/null")
-        run(f"sudo mv /data/web_static/releases/{archive_name}/web_static/* "
-            f"/data/web_static/releases/{archive_name}")
-        run("sudo rm -rf /data/web_static/releases/{archive_name}/web_static")
-        run(f"sudo ln -sf /data/web_static/releases/{archive_name}/ "
+        run(f"mkdir -p /data/web_static/releases/{arch}")
+        run(f"sudo tar xzf /tmp/{archive_name} -C"
+            f"/data/web_static/releases/{arch}")
+        run(f"rm -f /tmp/{archive_name}")
+        run("rm -rf /data/web_static/current 2> /dev/null")
+        run(f"sudo mv /data/web_static/releases/{arch}/web_static/* "
+            f"/data/web_static/releases/{arch}")
+        run("sudo rm -rf /data/web_static/releases/{arch}/web_static")
+        run(f"ln -sf /data/web_static/releases/{arch}/ "
             "/data/web_static/current")
         return True
     except Exception:
