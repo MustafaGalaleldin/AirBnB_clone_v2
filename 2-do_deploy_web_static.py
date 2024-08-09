@@ -15,19 +15,17 @@ def do_deploy(archive_path):
     if not archive_path or exists(archive_path) is False:
         return False
     try:
-        archive_name = archive_path.split("/")[-1]
-        arch = archive_name.split(".")[0]
-        put(archive_path, "/tmp/")
-        run(f"mkdir -p /data/web_static/releases/{arch}")
-        run(f"tar -xzf /tmp/{archive_name} -C"
-            f"/data/web_static/releases/{arch}")
-        run(f"rm -f /tmp/{archive_name}")
-        run("rm -rf /data/web_static/current 2> /dev/null")
-        run(f"mv -f /data/web_static/releases/{arch}/web_static/* "
-            f"/data/web_static/releases/{arch}")
-        run("rm -rf /data/web_static/releases/{arch}/web_static")
-        sudo(f"ln -sf /data/web_static/releases/{arch}/ "
-             "/data/web_static/current")
+        file_n = archive_path.split("/")[-1]
+        no_ext = file_n.split(".")[0]
+        path = "/data/web_static/releases/"
+        put(archive_path, '/tmp/')
+        run('mkdir -p {}{}/'.format(path, no_ext))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
+        run('rm /tmp/{}'.format(file_n))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run('rm -rf {}{}/web_static'.format(path, no_ext))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
     except Exception:
         return False
