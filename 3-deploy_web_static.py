@@ -53,7 +53,8 @@ def do_deploy(archive_path):
 
 def deploy():
     """
-    the main function for deploying
+    the main function for deploying, it is a Fabric function
+    that creates and distributes an archive to your web servers
     """
     arch_path = do_pack()
     if arch_path is None:
