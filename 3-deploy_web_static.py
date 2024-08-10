@@ -28,7 +28,10 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """distributes an archive to the web servers"""
+    """
+    a Fabric script that distributes an archive to your web servers
+    using the function do_deploy
+    """
     if exists(archive_path) is False:
         return False
     try:
@@ -49,7 +52,9 @@ def do_deploy(archive_path):
 
 
 def deploy():
-    """the main function for deploying"""
+    """
+    the main function for deploying
+    """
     arch_path = do_pack()
     if arch_path is None:
         return False
