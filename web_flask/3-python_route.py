@@ -22,5 +22,17 @@ def text(text):
     return f"C {text.replace('_', ' ')}"
 
 
+@app.route("/python", strict_slashes=False)
+def py():
+    """text returned"""
+    return "Python is cool"
+
+
+@app.route("/python/<text>", strict_slashes=False)
+def py2(text):
+    """text returned"""
+    return f"Python {text.replace('_', ' ')}"
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
