@@ -24,14 +24,20 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            for k, v in kwargs.items():
-                if k == 'updated_at' or k == 'created_at':
-                    kwargs[k] = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
-                if k != '__class__':
-                    kwargs[k] = v
-            # if 'id' not in kwargs.keys():
-            #     kwargs['id'] = str(uuid.uuid4())
-            self.__dict__.update(kwargs)
+            time = "%Y-%m-%dT%H:%M:%S.%f"
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    setattr(self, key, value)
+            if kwargs.get("created_at", None) and type(self.created_at) is str:
+                self.created_at = datetime.strptime(kwargs["created_at"], time)
+            else:
+                self.created_at = datetime.utcnow()
+            if kwargs.get("updated_at", None) and type(self.updated_at) is str:
+                self.updated_at = datetime.strptime(kwargs["updated_at"], time)
+            else:
+                self.updated_at = datetime.utcnow()
+            if kwargs.get("id", None) is None:
+                self.id = str(uuid.uuid4())
 
     def __str__(self):
         """Returns a string representation of the instance"""
