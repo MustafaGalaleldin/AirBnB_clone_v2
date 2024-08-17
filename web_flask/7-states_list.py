@@ -15,7 +15,7 @@ def tear(exception=None):
 @app.route('/states_list', strict_slashes=False)
 def list_states():
     " display a HTML states page"
-    states = storage.all(State)
+    states = sorted(list(storage.all(State).values()), key=lambda st: st.name)
     return render_template('7-states_list.html', states=states)
 
 
