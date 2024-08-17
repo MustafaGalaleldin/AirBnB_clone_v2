@@ -6,12 +6,6 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.teardown_appcontext
-def tear(exception=None):
-    "tear down"
-    storage.close()
-
-
 @app.route('/states_list', strict_slashes=False)
 def list_states():
     " display a HTML states page"
@@ -19,5 +13,11 @@ def list_states():
     return render_template('7-states_list.html', states=states)
 
 
+@app.teardown_appcontext
+def tear(exception):
+    "tear down"
+    storage.close()
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port='5000')
