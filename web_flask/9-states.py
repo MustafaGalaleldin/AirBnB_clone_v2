@@ -25,13 +25,16 @@ def state_city(id):
     "show cities with state_id"
     existed = False
     st_cities = None
+    st_state = None
     states = storage.all(State).values()
     for state in states:
         if state.id == id:
             existed = True
-            st_cities = state.cities
+            st_state = state
             break
-    return render_template('9-states.html', existed=existed, cities=st_cities)
+    return render_template('9-states.html',
+                           existed=existed,
+                           state=st_state)
 
 
 if __name__ == '__main__':
